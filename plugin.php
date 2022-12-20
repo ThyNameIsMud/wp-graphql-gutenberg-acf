@@ -81,13 +81,15 @@ if ( ! class_exists( 'WPGraphQLGutenbergACF' ) && class_exists( 'WPGraphQL\ACF\C
 
 		public function get_root_id( $id, $root ) {
 			if ( $root instanceof Block ) {
+				$id = $root['postId'] . '_' . $root['order'];
+				if (array_key_exists('id', $root['attributes'])) {
+					$id = $root['attributes']['id'];
+				}
 				acf_setup_meta(
 						$root['attributes']['data'],
-						$root['attributes']['id'],
+						$id,
 						false
 				);
-
-				return $root['attributes']['id'];
 			} // end if
 
 			return $id;
